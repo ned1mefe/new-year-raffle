@@ -3,6 +3,20 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import random
 
+def shuffle_no_self_index(n):
+    original_list = list(range(n))
+    shuffled_list = []
+
+    while original_list:
+        index = random.randint(0, len(original_list) - 1)
+        while index == len(shuffled_list):
+            index = random.randint(0, len(original_list) - 1)
+            
+
+        shuffled_list.append(original_list.pop(index))
+
+    return shuffled_list
+
 names_mails = [
     ("Ayça", "ayca.ece.arsln@gmail.com"),
     ("Arda", "ardayungucu48@gmail.com"),
@@ -21,18 +35,7 @@ smtp_password = input("Enter password: ")
 from_mail = "e2521326@ceng.metu.edu.tr"
 subject = "Yılbaşı Çekilişi"
 
-reciever = list(range(len(names_mails)))
-
-satisfied = False
-
-while(not satisfied):
-    random.shuffle(reciever)
-
-    satisfied = True
-    for i in range(len(reciever)):
-        if (i == reciever[i]):
-            satisfied = False    
-
+reciever = shuffle_no_self_index(len(names_mails))
 
 for i in range(len(names_mails)):
     
