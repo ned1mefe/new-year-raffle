@@ -3,28 +3,12 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import random
 
-def shuffle_no_self_index(n):
-    original_list = list(range(n))
-    shuffled_list = []
-
-    while original_list:
-        index = random.randint(0, len(original_list) - 1)
-        while index == len(shuffled_list):
-            index = random.randint(0, len(original_list) - 1)
-            
-        shuffled_list.append(original_list.pop(index))
-
-    return shuffled_list
-
 def main():
     names_mails = [
-        ("Ayça", "ayca.ece.arsln@gmail.com"),
-        ("Arda", "ardayungucu48@gmail.com"),
-        ("Cenk", "cengizcenkkerem@gmail.com"),
-        ("Efe", "efe.candas@metu.edu.tr"),
-        ("Sude", "badur.sude@gmail.com"),
-        ("Selin", "selin.basar@metu.edu.tr"),
-        ("İbo", "erturk.emre@metu.edu.tr")
+        ("isim1", "isim1@gmail.com"),
+        ("isim2", "isim1@gmail.com"),
+        ("isim3", "isim1@gmail.com"),
+        ("isim4", "isim1@gmail.com"),
     ]
 
     smtp_server = 'mailhost.ceng.metu.edu.tr'
@@ -35,11 +19,13 @@ def main():
     from_mail = "e2521326@ceng.metu.edu.tr"
     subject = "Secret Santa"
 
-    reciever = shuffle_no_self_index(len(names_mails))
+    random.shuffle(names_mails)
 
     for i in range(len(names_mails)):
         
-        body = "You will buy a gift for : " + names_mails[reciever[i]][0]  +"."
+        index = 0 if i == len(names_mails) - 1 else i + 1
+
+        body = "Hediyeni " +  names_mails[index][0]  +"'ya alacaksın."
 
         msg = MIMEMultipart()
         msg['From'] = from_mail
